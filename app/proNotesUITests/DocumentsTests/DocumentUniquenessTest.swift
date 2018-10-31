@@ -24,12 +24,12 @@ class DocumentUniquenessTest: XCTestCase {
         super.tearDown()
     }
 
-   /* func testForDuplicates() {
+    func testForDuplicates() {
         let documentName = prepareDocument(app: app)
         let newDocumentName = prepareDocument(app: app)
         XCTAssertTrue(newDocumentName != documentName)
         deleteDocument(name: documentName, app: app)
         deleteDocument(name: newDocumentName, app: app)
-    }*/
+    }
 
 }

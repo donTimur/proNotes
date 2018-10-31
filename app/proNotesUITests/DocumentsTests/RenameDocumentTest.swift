@@ -31,7 +31,6 @@ func testRenameDocument() {
         
         changeFileName(app: app, newName: newName)
         closeDocument(app: app)
-        wait(for: app.collectionViews.textFields[newName].exists, timeout: 5)
         XCTAssertFalse(app.collectionViews.textFields[documentName].exists)
         deleteDocument(name: newName, app: app)
     }
