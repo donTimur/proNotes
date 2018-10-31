@@ -37,6 +37,7 @@ class SliderTest: XCTestCase {
         let slider = app.sliders[DocumentPage.Constant.drawSlider]
         let sliderToString = moveSlider(slider: slider, position: Constant.position)
         XCTAssertTrue(sliderToString == Constant.sliderMaxPosition)
+        closeDocument(app: app)
         deleteDocument(name: documentName, app: app)
     }
 }

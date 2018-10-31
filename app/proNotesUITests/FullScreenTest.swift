@@ -29,7 +29,7 @@ class FullScreenTest: XCTestCase {
         app.buttons[DocumentPage.Constant.fullScreenButton].tap()
         
         XCTAssertFalse(app.tables.staticTexts[DocumentPage.Constant.documentLayers].exists)
+        closeDocument(app: app)
         deleteDocument(name: documentName, app: app)
     }
-
 }

@@ -33,6 +33,7 @@ class LayerTableViewUITests: XCTestCase {
         let textFieldCell = layerTableView.cells.matching(identifier: "LayerTableViewCell").element(boundBy: 0)
         textFieldCell.buttons.matching(identifier: "deleteLayerButton").element.tap()
         XCTAssertEqual(layerTableView.cells.matching(identifier: "LayerTableViewCell").count, 0)
+        closeDocument(app: app)
         deleteDocument(name: documentName, app: app)
     }
 }
