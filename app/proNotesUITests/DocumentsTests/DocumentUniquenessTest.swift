@@ -10,6 +10,7 @@ import XCTest
 
 class DocumentUniquenessTest: XCTestCase {
 
+    var implicitWait: Int = 3
     private var app: XCUIApplication!
     
     override func setUp() {
@@ -27,6 +28,7 @@ class DocumentUniquenessTest: XCTestCase {
     func testForDuplicates() {
         let documentName = prepareDocument(app: app)
         let newDocumentName = prepareDocument(app: app)
+        app.collectionViews.cells.staticTexts[documentName].waitForExistence(timeout: implicitWait)
         XCTAssertTrue(newDocumentName != documentName)
         deleteDocument(name: documentName, app: app)
         deleteDocument(name: newDocumentName, app: app)
