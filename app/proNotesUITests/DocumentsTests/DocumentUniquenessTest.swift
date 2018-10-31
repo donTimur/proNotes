@@ -10,7 +10,7 @@ import XCTest
 
 class DocumentUniquenessTest: XCTestCase {
 
-    var implicitWait: Int = 3
+    var implicitWait: Double = 3
     private var app: XCUIApplication!
     
     override func setUp() {
