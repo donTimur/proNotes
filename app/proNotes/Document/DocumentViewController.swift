@@ -46,6 +46,8 @@ class DocumentViewController: UIViewController {
         super.viewDidLoad()
         setUpTitle()
         pageInfoButton.setHidden(true)
+        fullScreenButton.accessibilityIdentifier = "fullScreenButton"
+        sketchButton.accessibilityIdentifier = "pen"
     }
     
     override func viewWillAppear(_ animated: Bool) {

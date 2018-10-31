@@ -10,48 +10,29 @@ import XCTest
 
 class LayerTableViewUITests: XCTestCase {
         
+    private var app: XCUIApplication!
+    
     override func setUp() {
         super.setUp()
-        continueAfterFailure = false
-        let app = XCUIApplication()
-        app.launchArguments = ["UITEST"]
+        app = XCUIApplication()
         app.launch()
-        XCUIDevice.shared().orientation = .landscapeLeft
+        passWelcomeScreen(app: app)
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        app = nil
         super.tearDown()
     }
     
     func testDeleteLayer() {
-        createAndOpenDocument()
-        addTextField()
-        pressLayerButton()
-        let app = XCUIApplication()
+        let documentName = createAndOpenDocument(app: app)
+        addTextField(app: app)
+        pressLayerButton(app: app)
+
         let layerTableView = app.scrollViews.otherElements.tables
         let textFieldCell = layerTableView.cells.matching(identifier: "LayerTableViewCell").element(boundBy: 0)
         textFieldCell.buttons.matching(identifier: "deleteLayerButton").element.tap()
-        sleep(1)
         XCTAssertEqual(layerTableView.cells.matching(identifier: "LayerTableViewCell").count, 0)
+        deleteDocument(name: documentName, app: app)
     }
-    
-    /*
-     not working in current Xcode/ Swift Beta 3
-    func testHideLayer() {
-        createAndOpenDocument()
-        addTextField()
-        let app = XCUIApplication()
-        let testInput = UUID().uuidString
-        app.typeText(testInput)
-        pressLayerButton()
-        XCTAssertTrue(app.otherElements.staticTexts[testInput].exists, "Changed Text exists")
-        let layerTableView = app.scrollViews.otherElements.tables
-        let textFieldCell = layerTableView.cells.matching(identifier: "LayerTableViewCell").element(boundBy: 0)
-        textFieldCell.buttons.matching(identifier: "hideLayerButton").element.tap()
-        XCTAssertTrue(!app.otherElements.staticTexts[testInput].exists, "Changed is not hidden")
-        textFieldCell.buttons.matching(identifier: "hideLayerButton").element.tap()
-        XCTAssertTrue(app.otherElements.staticTexts[testInput].exists, "Changed is still hidden")
-    }
-     */
 }
