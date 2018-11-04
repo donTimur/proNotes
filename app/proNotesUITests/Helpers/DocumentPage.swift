@@ -33,8 +33,23 @@ class DocumentPage {
         static let pen = "pen"
         static let documentCanvas = "documentCanvas"
     }
+    
+    static func cell() -> XCUIElementQuery {
+        return XCUIApplication().collectionViews.cells
+    }
+    
+    static func screen() -> XCUIElement {
+        return XCUIApplication()
+    }
+    
+    static func button(button: String) -> XCUIElement {
+        return XCUIApplication().buttons[button]
+    }
+    
+    static func slider(slider: String) -> XCUIElement {
+        return XCUIApplication().sliders[DocumentPage.Constant.drawSlider]
+    }
 }
-
 
 extension XCTest {
     
@@ -42,9 +57,9 @@ extension XCTest {
     ///
     /// - returns: the name of the new created document
     @discardableResult
-    func createAndOpenDocument(app: XCUIApplication) -> String {
-        app.navigationBars[DocumentPage.Constant.documentOverview].buttons[DocumentPage.Constant.documentAdd].tap()
-        let pronotesDocumentViewNavigationBar = app.navigationBars[DocumentPage.Constant.documentView]
+    func createAndOpenDocument() -> String {
+        DocumentPage.screen().navigationBars[DocumentPage.Constant.documentOverview].buttons[DocumentPage.Constant.documentAdd].tap()
+        let pronotesDocumentViewNavigationBar = DocumentPage.screen().navigationBars[DocumentPage.Constant.documentView]
         let documentName = pronotesDocumentViewNavigationBar.children(matching: .other).element.children(matching: .textField).element.value as! String
         return documentName
     }
@@ -52,15 +67,15 @@ extension XCTest {
     /// Deletes the document if the app is currently in the document overview
     ///
     /// - parameter name: of the document
-    func deleteDocument(name: String, app: XCUIApplication) {
-        let documentCell = app.collectionViews.textFields[name]
+    func deleteDocument(name: String) {
+        let documentCell = DocumentPage.screen().collectionViews.textFields[name]
         documentCell.longPress()
-        app.menuItems[DocumentPage.Constant.deleteButton].tap()
+        DocumentPage.screen().menuItems[DocumentPage.Constant.deleteButton].tap()
     }
     
     /// Closes the document if the document editor is currently opened
-    func closeDocument(app: XCUIApplication) {
-        let pronotesDocumentViewNavigationBar = app.navigationBars[DocumentPage.Constant.documentView]
+    func closeDocument() {
+        let pronotesDocumentViewNavigationBar = DocumentPage.screen().navigationBars[DocumentPage.Constant.documentView]
         pronotesDocumentViewNavigationBar.buttons[DocumentPage.Constant.document].tap()
     }
     
@@ -110,16 +125,16 @@ extension XCTest {
         pronotesDocumentViewNavigationBar.buttons[DocumentPage.Constant.layerIconButton].tap()
     }
     
-    func passWelcomeScreen(app: XCUIApplication) {
-        let welcomeButton = app.buttons[DocumentPage.Constant.continueSplashScreen]
+    func passWelcomeScreen() {
+        let welcomeButton = DocumentPage.screen().buttons[DocumentPage.Constant.continueSplashScreen]
         if (welcomeButton.exists) {
             welcomeButton.tap()
         }
     }
     
-    func prepareDocument(app: XCUIApplication) -> String {
-        let documentName = createAndOpenDocument(app: app)
-        closeDocument(app: app)
+    func prepareDocument() -> String {
+        let documentName = createAndOpenDocument()
+        closeDocument()
         return documentName
     }
     
@@ -136,13 +151,29 @@ extension XCTest {
         let date = Date()
         let formatter = DateFormatter()
         
-        formatter.dateFormat = "MM/dd/yy"
+        formatter.dateStyle = DateFormatter.Style.short
+        formatter.timeStyle = .none
         return formatter.string(from: date)
     }
     
-    func moveSlider(slider: XCUIElement, position: CGFloat) -> String{
+    func moveSlider(position: CGFloat) -> String{
+        let slider = DocumentPage.slider(slider: DocumentPage.Constant.drawSlider)
         slider.adjust(toNormalizedSliderPosition: position)
         return slider.value as! String
+    }
+    
+    func chooseBlueColor() {
+        let colorView = DocumentPage.screen().scrollViews.collectionViews["colorView"]
+        colorView.swipeLeft()
+        colorView.children(matching: .cell).element(boundBy: 2).tap()
+    }
+    
+    func enterFullScreen() {
+        DocumentPage.screen().buttons[DocumentPage.Constant.fullScreenButton].tap()
+    }
+    
+    func documentDrawingModeOn() {
+        DocumentPage.button(button: DocumentPage.Constant.pen).tap()
     }
 }
 

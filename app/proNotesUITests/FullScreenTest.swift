@@ -16,7 +16,7 @@ class FullScreenTest: XCTestCase {
         super.setUp()
         app = XCUIApplication()
         app.launch()
-        passWelcomeScreen(app: app)
+        passWelcomeScreen()
     }
     
     override func tearDown() {
@@ -25,11 +25,11 @@ class FullScreenTest: XCTestCase {
     }
 
     func testFullScreenDocument() {
-        let documentName = createAndOpenDocument(app: app)
-        app.buttons[DocumentPage.Constant.fullScreenButton].tap()
+        let documentName = createAndOpenDocument()
+        enterFullScreen()
         
         XCTAssertFalse(app.tables.staticTexts[DocumentPage.Constant.documentLayers].exists)
-        closeDocument(app: app)
-        deleteDocument(name: documentName, app: app)
+        closeDocument()
+        deleteDocument(name: documentName)
     }
 }

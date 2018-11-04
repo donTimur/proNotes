@@ -71,7 +71,6 @@ class ColorPickerViewController: UIViewController, UICollectionViewDataSource, U
                     self.colorCollectionView.reloadItems(at: [selectedIndexPath, IndexPath(item: oldValue, section: 0)])
                     self.colorCollectionView.scrollToItem(at: selectedIndexPath, at: .centeredHorizontally, animated: true)
                 })
-                
             }
         }
     }
@@ -84,6 +83,7 @@ class ColorPickerViewController: UIViewController, UICollectionViewDataSource, U
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate?.setupColorPicker?(self)
+        colorCollectionView.accessibilityIdentifier = "colorView"
     }
     
     override func viewWillAppear(_ animated: Bool) {

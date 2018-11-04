@@ -16,7 +16,7 @@ class LayerTableViewUITests: XCTestCase {
         super.setUp()
         app = XCUIApplication()
         app.launch()
-        passWelcomeScreen(app: app)
+        passWelcomeScreen()
     }
     
     override func tearDown() {
@@ -25,7 +25,7 @@ class LayerTableViewUITests: XCTestCase {
     }
     
     func testDeleteLayer() {
-        let documentName = createAndOpenDocument(app: app)
+        let documentName = createAndOpenDocument()
         addTextField(app: app)
         pressLayerButton(app: app)
 
@@ -33,7 +33,7 @@ class LayerTableViewUITests: XCTestCase {
         let textFieldCell = layerTableView.cells.matching(identifier: "LayerTableViewCell").element(boundBy: 0)
         textFieldCell.buttons.matching(identifier: "deleteLayerButton").element.tap()
         XCTAssertEqual(layerTableView.cells.matching(identifier: "LayerTableViewCell").count, 0)
-        closeDocument(app: app)
-        deleteDocument(name: documentName, app: app)
+        closeDocument()
+        deleteDocument(name: documentName)
     }
 }

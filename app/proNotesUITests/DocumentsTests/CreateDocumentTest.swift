@@ -15,38 +15,37 @@ class CreateDocumentTest: XCTestCase {
         static let amountOfDocumentsAfterDeletion = 0
     }
     
-    private var app: XCUIApplication!
+    //private var app: XCUIApplication!
     
     override func setUp() {
         super.setUp()
-        app = XCUIApplication()
-        app.launch()
-        passWelcomeScreen(app: app)
+        XCUIApplication().launch()
+        passWelcomeScreen()
     }
-
+    
     override func tearDown() {
-        app = nil
+        //app = nil
         super.tearDown()
     }
-
+    
     func testCreateDocument() {
-        let documentName = prepareDocument(app: app)
+        let documentName = prepareDocument()
         
-        let appNotesCells = app.collectionViews.cells
-        
-        XCTAssertTrue(appNotesCells.countVisibleElements == Constants.amountOfdocumentsAfterCreating)
-        XCTAssertTrue(appNotesCells.textFields[documentName].exists)
-        deleteDocument(name: documentName, app: app)
-        XCTAssertTrue(appNotesCells.countVisibleElements == Constants.amountOfDocumentsAfterDeletion)
+        XCTAssertTrue(DocumentPage.cell().countVisibleElements == Constants.amountOfdocumentsAfterCreating,
+                      "Amount of documents after creation expected: \(Constants.amountOfdocumentsAfterCreating), but showed: \(DocumentPage.cell().countVisibleElements)")
+        XCTAssertTrue(DocumentPage.cell().textFields[documentName].exists, "Document with name \(documentName) hasnot been created")
+        deleteDocument(name: documentName)
+        XCTAssertTrue(DocumentPage.cell().countVisibleElements == Constants.amountOfDocumentsAfterDeletion,
+                      "Amount of documents after deletion expected: \(Constants.amountOfDocumentsAfterDeletion), but showed: \(DocumentPage.cell().countVisibleElements)")
     }
     
     func testDateOfCreateDocument() {
         let date = getCurrentDate()
-        let documentName = prepareDocument(app: app)
+        let documentName = prepareDocument()
         
-        let appNotesCells = app.collectionViews.cells
+        let appNotesCells = DocumentPage.cell().staticTexts[date]
         
-        XCTAssertTrue(appNotesCells.staticTexts[date].exists)
-        deleteDocument(name: documentName, app: app)
+        XCTAssertTrue(appNotesCells.exists, "Document created with wrong date expected: \(date) but actual is \(appNotesCells.value)")
+        deleteDocument(name: documentName)
     }
 }

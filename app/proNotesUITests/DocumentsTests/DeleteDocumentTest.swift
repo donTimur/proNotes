@@ -9,7 +9,7 @@
 import XCTest
 
 class DeleteDocumentTest: XCTestCase {
-
+    
     private struct Constants {
         static let amountOfDocumentsAfterDeletion = 0
     }
@@ -20,20 +20,20 @@ class DeleteDocumentTest: XCTestCase {
         super.setUp()
         app = XCUIApplication()
         app.launch()
-        passWelcomeScreen(app: app)
+        passWelcomeScreen()
     }
     
     override func tearDown() {
         app = nil
         super.tearDown()
     }
-
+    
     func testDeleteDocument() {
-        let documentName = prepareDocument(app: app)
+        let documentName = prepareDocument()
         
         let appNotesCells = app.collectionViews.cells
         
-        deleteDocument(name: documentName, app: app)
+        deleteDocument(name: documentName)
         XCTAssertTrue(appNotesCells.countVisibleElements == Constants.amountOfDocumentsAfterDeletion)
     }
 }

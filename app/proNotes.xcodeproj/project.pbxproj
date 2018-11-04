@@ -112,6 +112,7 @@
 		9CD4F4832189ED0B00D6403D /* DocumentPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD4F4822189ED0B00D6403D /* DocumentPage.swift */; };
 		9CD4F486218A21CA00D6403D /* FullScreenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD4F485218A21CA00D6403D /* FullScreenTest.swift */; };
 		9CD4F48A218A376600D6403D /* SliderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD4F489218A376600D6403D /* SliderTest.swift */; };
+		9CFB6027218F5B4700CDC598 /* DocumentDrawTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFB6026218F5B4700CDC598 /* DocumentDrawTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -249,6 +250,7 @@
 		9CD4F4822189ED0B00D6403D /* DocumentPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPage.swift; sourceTree = "<group>"; };
 		9CD4F485218A21CA00D6403D /* FullScreenTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenTest.swift; sourceTree = "<group>"; };
 		9CD4F489218A376600D6403D /* SliderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTest.swift; sourceTree = "<group>"; };
+		9CFB6026218F5B4700CDC598 /* DocumentDrawTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDrawTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -571,6 +573,7 @@
 				9CD4F47E2189E3F000D6403D /* RenameDocumentTest.swift */,
 				9CD4F4802189E41F00D6403D /* RenameOverrideDocumentTest.swift */,
 				9CD4F489218A376600D6403D /* SliderTest.swift */,
+				9CFB6026218F5B4700CDC598 /* DocumentDrawTest.swift */,
 			);
 			path = DocumentsTests;
 			sourceTree = "<group>";
@@ -744,6 +747,7 @@
 				9CD4F4792189E19800D6403D /* Documents+XCUIElementQuery.swift in Sources */,
 				9CD4F486218A21CA00D6403D /* FullScreenTest.swift in Sources */,
 				9CD4F47B2189E2C400D6403D /* DeleteDocumentTest.swift in Sources */,
+				9CFB6027218F5B4700CDC598 /* DocumentDrawTest.swift in Sources */,
 				9CD4F47F2189E3F000D6403D /* RenameDocumentTest.swift in Sources */,
 				9CD4F47D2189E34F00D6403D /* DocumentUniquenessTest.swift in Sources */,
 				9CD4F48A218A376600D6403D /* SliderTest.swift in Sources */,

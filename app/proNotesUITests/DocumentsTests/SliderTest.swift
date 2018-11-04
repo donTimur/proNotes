@@ -21,7 +21,7 @@ class SliderTest: XCTestCase {
         super.setUp()
         app = XCUIApplication()
         app.launch()
-        passWelcomeScreen(app: app)
+        passWelcomeScreen()
     }
     
     override func tearDown() {
@@ -30,14 +30,12 @@ class SliderTest: XCTestCase {
     }
     
     func testSliderMaxPosition() {
-        let documentName = createAndOpenDocument(app: app)
+        let documentName = createAndOpenDocument()
         
-        app.buttons[DocumentPage.Constant.pen].tap()
-        
-        let slider = app.sliders[DocumentPage.Constant.drawSlider]
-        let sliderToString = moveSlider(slider: slider, position: Constant.position)
+        documentDrawingModeOn()
+        let sliderToString = moveSlider(position: Constant.position)
         XCTAssertTrue(sliderToString == Constant.sliderMaxPosition)
-        closeDocument(app: app)
-        deleteDocument(name: documentName, app: app)
+        closeDocument()
+        deleteDocument(name: documentName)
     }
 }
