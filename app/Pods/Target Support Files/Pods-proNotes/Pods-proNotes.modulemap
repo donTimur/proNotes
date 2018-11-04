@@ -1,0 +1,6 @@
+framework module Pods_proNotes {
+  umbrella header "Pods-proNotes-umbrella.h"
+
+  export *
+  module * { export * }
+}

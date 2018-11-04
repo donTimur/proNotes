@@ -7,8 +7,9 @@
 //
 
 import XCTest
+import FBSnapshotTestCase
 
-class DocumentDrawTest: XCTestCase {
+class DocumentDrawTest: FBSnapshotTestCase {
 
     private var app: XCUIApplication!
     private struct Constant {
@@ -28,7 +29,7 @@ class DocumentDrawTest: XCTestCase {
     }
 
     func testDocumentDraw() {
-        var documentName = createAndOpenDocument()
+        let documentName = createAndOpenDocument()
         documentDrawingModeOn()
         let colorView = app.scrollViews.otherElements.collectionViews["colorView"]
         colorView.children(matching: .cell).element(boundBy: 2)
