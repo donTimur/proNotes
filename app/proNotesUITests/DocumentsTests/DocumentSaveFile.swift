@@ -27,7 +27,7 @@ class DocumentSaveFile: XCTestCase {
     func testSaveImage() {
         let documentName = createAndOpenDocument()
         let photoAmountBeforeSave = countPhotosInGallery()
-        DocumentPage.screen().buttons["Cancel"].tap()
+        DocumentPage.screen().buttons[DocumentPage.Constant.cancelButton].tap()
         saveImage()
         let photoAmountAfterSave = countPhotosInGallery()
         XCTAssertTrue(photoAmountBeforeSave + 1 == photoAmountAfterSave, "Photo was not saved and didnot appear in gallery")

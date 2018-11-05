@@ -42,8 +42,7 @@ class DocumentDrawTest: FBSnapshotTestCase {
     func testDocumentDraw() {
         let documentName = createAndOpenDocument()
         documentDrawingModeOn()
-        let colorView = colorPallete()
-        XCTAssertTrue(colorView.exists, "ColorView element is not visible")
+        XCTAssertTrue(colorPallete().exists, "ColorView element is not visible")
         moveSlider(position: Constant.position)
         chooseBlueColor()
 

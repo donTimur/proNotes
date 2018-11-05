@@ -36,6 +36,7 @@ class DocumentPage {
         static let shareButton = "Share"
         static let saveAsImage = "As Images"
         static let saveImageButton = "Save Image"
+        static let moments = "Moments"
     }
     
     static func cell() -> XCUIElementQuery {
@@ -102,7 +103,7 @@ extension XCTest {
         app.tables.staticTexts[DocumentPage.Constant.photos].tap()
         getGalleryPermission()
         
-        app.tables.buttons["Moments"].tap()
+        app.tables.buttons[DocumentPage.Constant.moments].tap()
         app.collectionViews.cells.firstMatch.tap()
         
     }
