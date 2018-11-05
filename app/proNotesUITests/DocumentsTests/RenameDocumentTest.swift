@@ -29,12 +29,12 @@ class RenameDocumentTest: XCTestCase {
         let elementExistsPredicate = NSPredicate(format: "exists == TRUE")
         let documentName = createAndOpenDocument()
         
-        changeFileName(app: app, newName: newName)
+        changeFileName( newName: newName)
         closeDocument()
-        var element = app.collectionViews.textFields[newName]
+        let element = app.collectionViews.textFields[newName]
         self.expectation(for: elementExistsPredicate, evaluatedWith: element, handler: nil)
         self.waitForExpectations(timeout: 5.0, handler: nil)
-        XCTAssertFalse(app.collectionViews.textFields[documentName].exists)
+        XCTAssertFalse(app.collectionViews.textFields[documentName].exists, "Renamed file has old name expected: \(newName) actual: \(documentName)")
         deleteDocument(name: newName)
     }
     

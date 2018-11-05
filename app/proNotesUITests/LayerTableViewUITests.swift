@@ -26,8 +26,8 @@ class LayerTableViewUITests: XCTestCase {
     
     func testDeleteLayer() {
         let documentName = createAndOpenDocument()
-        addTextField(app: app)
-        pressLayerButton(app: app)
+        addTextField()
+        pressLayerButton()
 
         let layerTableView = app.scrollViews.otherElements.tables
         let textFieldCell = layerTableView.cells.matching(identifier: "LayerTableViewCell").element(boundBy: 0)

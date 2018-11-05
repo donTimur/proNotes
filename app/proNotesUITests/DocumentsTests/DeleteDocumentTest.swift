@@ -32,8 +32,10 @@ class DeleteDocumentTest: XCTestCase {
         let documentName = prepareDocument()
         
         let appNotesCells = app.collectionViews.cells
+        let visibleCells = appNotesCells.countVisibleElements
         
         deleteDocument(name: documentName)
-        XCTAssertTrue(appNotesCells.countVisibleElements == Constants.amountOfDocumentsAfterDeletion)
+        XCTAssertTrue(visibleCells - 1 == appNotesCells.countVisibleElements,
+                      "Amount of documents is the same after deletion expected: \(visibleCells - 1) actual \(appNotesCells.countVisibleElements)")
     }
 }

@@ -34,7 +34,7 @@ class SliderTest: XCTestCase {
         
         documentDrawingModeOn()
         let sliderToString = moveSlider(position: Constant.position)
-        XCTAssertTrue(sliderToString == Constant.sliderMaxPosition)
+        XCTAssertTrue(sliderToString == Constant.sliderMaxPosition, "Slider is not on max position")
         closeDocument()
         deleteDocument(name: documentName)
     }

@@ -27,7 +27,7 @@ class DocumentUniquenessTest: XCTestCase {
         let documentName = prepareDocument()
         let newDocumentName = prepareDocument()
         app.collectionViews.cells.staticTexts[documentName].waitForExistence(timeout: 3)
-        XCTAssertTrue(newDocumentName != documentName)
+        XCTAssertTrue(newDocumentName != documentName, "New document was created with a non-unique name")
         deleteDocument(name: documentName)
         deleteDocument(name: newDocumentName)
     }

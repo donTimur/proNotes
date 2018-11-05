@@ -9,6 +9,7 @@
 import XCTest
 
 class DocumentPage {
+    
     struct Constant {
         static let documentOverview = "proNotes.DocumentOverviewView"
         static let documentAdd = "Add"
@@ -32,6 +33,9 @@ class DocumentPage {
         static let drawSlider = "drawSlider"
         static let pen = "pen"
         static let documentCanvas = "documentCanvas"
+        static let shareButton = "Share"
+        static let saveAsImage = "As Images"
+        static let saveImageButton = "Save Image"
     }
     
     static func cell() -> XCUIElementQuery {
@@ -48,6 +52,10 @@ class DocumentPage {
     
     static func slider(slider: String) -> XCUIElement {
         return XCUIApplication().sliders[DocumentPage.Constant.drawSlider]
+    }
+    
+    static func alert() -> XCUIElement {
+        return XCUIApplication().alerts.element
     }
 }
 
@@ -80,48 +88,52 @@ extension XCTest {
     }
     
     /// adds a textfield to the current Page if a document is open
-    func addTextField(app: XCUIApplication) {
-        openAddLayerOrPagePopover(app: app)
-        app.tables.staticTexts[DocumentPage.Constant.textField].tap()
+    func addTextField() {
+        openAddLayerOrPagePopover()
+        DocumentPage.screen().tables.staticTexts[DocumentPage.Constant.textField].tap()
     }
     
     
     /// adds a Image from the Photos Library to the current Page if a document is open
-    func addImage(app: XCUIApplication) {
-        openAddLayerOrPagePopover(app: app)
+    func addImage() {
+        let app = DocumentPage.screen()
+        openAddLayerOrPagePopover()
         app.tables.staticTexts[DocumentPage.Constant.imageButton].tap()
         app.tables.staticTexts[DocumentPage.Constant.photos].tap()
-        if app.alerts.element.exists {
-            app.alerts.element.collectionViews.buttons[DocumentPage.Constant.allow].tap()
-        }
+        getGalleryPermission()
         
         app.tables.buttons["Moments"].tap()
         app.collectionViews.cells.firstMatch.tap()
         
     }
     
+    func getGalleryPermission() {
+        if DocumentPage.alert().exists {
+            DocumentPage.alert().collectionViews.buttons[DocumentPage.Constant.allow].tap()
+        }
+    }
     /// adds a Sketch Layer to the current Page if a document is open
-    func addSketchLayer(app: XCUIApplication) {
-        openAddLayerOrPagePopover(app: app)
-        app.tables.staticTexts[DocumentPage.Constant.sketchCanvas].tap()
+    func addSketchLayer() {
+        openAddLayerOrPagePopover()
+        DocumentPage.screen().tables.staticTexts[DocumentPage.Constant.sketchCanvas].tap()
     }
     
     /// adds a empty page to the document if a document is open
-    func addEmptyPage(app: XCUIApplication) {
-        openAddLayerOrPagePopover(app: app)
-        app.tables.staticTexts[DocumentPage.Constant.emptyPage].tap()
+    func addEmptyPage() {
+        openAddLayerOrPagePopover()
+        DocumentPage.screen().tables.staticTexts[DocumentPage.Constant.emptyPage].tap()
     }
     
     
     /// opens the Add layer or Page popover if a document is open
-    func openAddLayerOrPagePopover(app: XCUIApplication) {
-        let pronotesDocumentViewNavigationBar = app.navigationBars[DocumentPage.Constant.documentView]
+    func openAddLayerOrPagePopover() {
+        let pronotesDocumentViewNavigationBar = DocumentPage.screen().navigationBars[DocumentPage.Constant.documentView]
         pronotesDocumentViewNavigationBar.buttons[DocumentPage.Constant.documentAdd].tap()
     }
     
     /// press the layer Button to get back to the page info if a layer is selected
-    func pressLayerButton(app: XCUIApplication) {
-        let pronotesDocumentViewNavigationBar = app.navigationBars[DocumentPage.Constant.documentView]
+    func pressLayerButton() {
+        let pronotesDocumentViewNavigationBar = DocumentPage.screen().navigationBars[DocumentPage.Constant.documentView]
         pronotesDocumentViewNavigationBar.buttons[DocumentPage.Constant.layerIconButton].tap()
     }
     
@@ -138,12 +150,12 @@ extension XCTest {
         return documentName
     }
     
-    func changeFileName(app: XCUIApplication, newName: String) -> XCUIElement {
-        let textField = app.navigationBars[DocumentPage.Constant.documentView].children(matching: .other).element.children(matching: .textField).element
+    func changeFileName(newName: String) -> XCUIElement {
+        let textField = DocumentPage.screen().navigationBars[DocumentPage.Constant.documentView].children(matching: .other).element.children(matching: .textField).element
         
         textField.tap()
         textField.clearAndEnterText(newName)
-        app.buttons[DocumentPage.Constant.returnButton].tap()
+        DocumentPage.screen().buttons[DocumentPage.Constant.returnButton].tap()
         return textField
     }
     
@@ -175,34 +187,29 @@ extension XCTest {
     func documentDrawingModeOn() {
         DocumentPage.button(button: DocumentPage.Constant.pen).tap()
     }
-}
-
-
-// From StackOverflow User bay.phillips http://stackoverflow.com/a/32894080
-
-extension XCUIElement {
     
-    /// Removes any current text in the field before typing in the new value
-    ///
-    /// - parameter text: the text to enter into the field
-    func clearAndEnterText(_ text: String) -> Void {
-        guard let stringValue = self.value as? String else {
-            XCTFail("Tried to clear and enter text into a non string value")
-            return
-        }
-        
-        self.tap()
-        
-        var deleteString: String = ""
-        for _ in stringValue {
-            deleteString += "\u{8}"
-        }
-        self.typeText(deleteString)
-        
-        self.typeText(text)
+    func colorPallete() -> XCUIElement {
+        let colorView = DocumentPage.screen().scrollViews.otherElements.collectionViews["colorView"]
+        return colorView.children(matching: .cell).element(boundBy: 2)
     }
     
-    func longPress() {
-        press(forDuration: 1)
+    func saveImage() {
+        let app = DocumentPage.screen()
+        app.buttons[DocumentPage.Constant.shareButton].tap()
+        app.tables.staticTexts[DocumentPage.Constant.saveAsImage].tap()
+        getGalleryPermission()
+        app.buttons[DocumentPage.Constant.saveImageButton].tap()
+    }
+    
+    func countPhotosInGallery() -> UInt {
+        let app = DocumentPage.screen()
+        openAddLayerOrPagePopover()
+        
+        app.tables.staticTexts[DocumentPage.Constant.imageButton].tap()
+        app.tables.staticTexts[DocumentPage.Constant.photos].tap()
+        getGalleryPermission()
+        
+        app.tables.buttons["Camera Roll"].tap()
+        return app.collectionViews.cells.count
     }
 }

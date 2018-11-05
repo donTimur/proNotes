@@ -10,11 +10,6 @@ import XCTest
 
 class CreateDocumentTest: XCTestCase {
     
-    private struct Constants {
-        static let amountOfdocumentsAfterCreating = 1
-        static let amountOfDocumentsAfterDeletion = 0
-    }
-    
     //private var app: XCUIApplication!
     
     override func setUp() {
@@ -29,14 +24,16 @@ class CreateDocumentTest: XCTestCase {
     }
     
     func testCreateDocument() {
+        let amountOfDocuments = DocumentPage.cell().countVisibleElements
         let documentName = prepareDocument()
         
-        XCTAssertTrue(DocumentPage.cell().countVisibleElements == Constants.amountOfdocumentsAfterCreating,
-                      "Amount of documents after creation expected: \(Constants.amountOfdocumentsAfterCreating), but showed: \(DocumentPage.cell().countVisibleElements)")
+        XCTAssertTrue(amountOfDocuments + 1 == DocumentPage.cell().countVisibleElements,
+                      "Amount of documents after creation expected: \(amountOfDocuments + 1), but showed: \(DocumentPage.cell().countVisibleElements)")
+        
         XCTAssertTrue(DocumentPage.cell().textFields[documentName].exists, "Document with name \(documentName) hasnot been created")
         deleteDocument(name: documentName)
-        XCTAssertTrue(DocumentPage.cell().countVisibleElements == Constants.amountOfDocumentsAfterDeletion,
-                      "Amount of documents after deletion expected: \(Constants.amountOfDocumentsAfterDeletion), but showed: \(DocumentPage.cell().countVisibleElements)")
+        XCTAssertTrue(DocumentPage.cell().countVisibleElements == amountOfDocuments,
+                      "Amount of documents after deletion expected: \(amountOfDocuments), but showed: \(DocumentPage.cell().countVisibleElements)")
     }
     
     func testDateOfCreateDocument() {
